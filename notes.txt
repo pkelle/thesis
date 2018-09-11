@@ -1,1 +1,17 @@
 
+
+* forecast real (constant price) GDP
+  model with unemployment
+* forecast HCIP or use 2%+e 
+* create vector with scheduled ESM loan repayments loan_repayments[]
+* take total initial debt; 
+  seperate bonds and loans;
+  calculate interest payments accordingly;
+  ESM rate for loans;
+  for bonds either average or seperate between Tbills and bonds;
+  look at last few bulletins and look at split between tbills and bonds;
+* current cash holdings? 
+* model government budget
+  surplusses will be used to lower outstanding bonds
+  incorporate loan_repayments[] interest payments for debt, debt rollover (bonds)
+* total debt to gdp ratio calculation
