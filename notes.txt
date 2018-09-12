@@ -1,5 +1,4 @@
 
-
 * forecast real (constant price) GDP
   model with unemployment
 * forecast HCIP or use 2%+e 
@@ -15,3 +14,13 @@
   surplusses will be used to lower outstanding bonds
   incorporate loan_repayments[] interest payments for debt, debt rollover (bonds)
 * total debt to gdp ratio calculation
+
+
+*** structure ***
+* history why greece required debt relief
+* history of assistance program (EFSF, ESM, IMF)
+* how the money was used (greek banks, nonperforming loans), what is current situation of nonperforming loans?
+* outlook 2030 model, can greece sustain debt burden, debt to gdp ratio
+* a look at demographics and impact of government budget
+* future outlook greece, could debt be paid back?, influences of inflation, influnence on interest rate impact for debt rollover
+* put absolute debt of greence in relation to france or italy and possible future problems for the EU
