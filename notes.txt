@@ -1,7 +1,7 @@
 
 * forecast real (constant price) GDP
   model with unemployment
-* forecast HCIP or use 2%+e 
+* forecast HCIP or use 2%+e as inflation rate
 * create vector with scheduled ESM loan repayments loan_repayments[]
 * take total initial debt; 
   seperate bonds and loans;
@@ -18,9 +18,18 @@
 
 *** structure ***
 * history why greece required debt relief
-* history of assistance program (EFSF, ESM, IMF)
+  - GFC, nonperforming loans of greek banks
+  - but also government deficts
+* history of rescue/assistance programmes (EFSF, ESM, IMF)
 * how the money was used (greek banks, nonperforming loans), what is current situation of nonperforming loans?
 * outlook 2030 model, can greece sustain debt burden, debt to gdp ratio
-* a look at demographics and impact of government budget
-* future outlook greece, could debt be paid back?, influences of inflation, influnence on interest rate impact for debt rollover
+* look at government income sources and expenses
+  - surplus sustainable?
+  - amount of one time income from privatisations?
+  - look at demographics and impact of government budget
+* future outlook greece
+  - could debt be paid back?
+  - influence of inflation
+  - influence of interest rate impact for debt rollover
+  - why IMF did not participate in the third rescue package, impossible to recover without debt write off? 
 * put absolute debt of greence in relation to france or italy and possible future problems for the EU
