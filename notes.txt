@@ -1,4 +1,5 @@
 
+*** model ***
 * forecast real (constant price) GDP
   model with unemployment
 * forecast HCIP or use 2%+e as inflation rate
@@ -33,3 +34,21 @@
   - influence of interest rate impact for debt rollover
   - why IMF did not participate in the third rescue package, impossible to recover without debt write off? 
 * put absolute debt of greence in relation to france or italy and possible future problems for the EU
+
+
+*** notes ***
+(http://www.europarl.europa.eu/RegData/etudes/IDAN/2018/624415/IPOL_IDA(2018)624415_EN.pdf)
+* Under the ESM programme, primary surplus target is set in terms of primary balance, excluding one-off costs 
+  of bank recapitalisations, Securities Markets Programme and Agreement on Net Financial Assets revenues as 
+  well as part of the privatisation proceeds. 
+* In February 2018, the unemployment rate among women came in at 26.2% as compared with 16.4% for men. 
+  The youth unemployment rate stood at 45.4% (it peaked at a staggering 60.5% in February 2013). 
+* Note  that Greece returned to bond markets in July 2017 for the first time since 2014, raising EUR 3 
+  billion in 5-year bonds at 4.625 per cent. The issue was oversubscribed as market bids amounted 
+  to EUR 6.5 billion. As to 2018, Greece successfully tapped markets in February, raising EUR 3 billion in 
+  7-year bonds at 3.5 per cent. The issue was again oversubscribed by a factor of around 2.
+  
+  
+*** links ***
+* nonperforming loans https://data.worldbank.org/indicator/FB.AST.NPER.ZS?locations=GR
+
