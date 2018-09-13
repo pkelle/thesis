@@ -22,14 +22,20 @@
   - GFC, nonperforming loans of greek banks
   - but also government deficts
 * history of rescue/assistance programmes (EFSF, ESM, IMF)
-* how the money was used (greek banks, nonperforming loans), what is current situation of nonperforming loans?
-* outlook 2030 model, can greece sustain debt burden, debt to gdp ratio
+* how the money was used (greek banks, nonperforming loans, service debt, arrears) 
+* outlook 2030 model, can greece sustain debt burden
+  - debt to gdp ratio
+  - gross financing needs to gdp ratio
+  - incorporate/discuss some of the debt sustainability analysis from IMF/ECB reports/guidlines
+  - compare with long term DSA models from IMF and EU
 * look at government income sources and expenses
   - surplus sustainable?
   - amount of one time income from privatisations?
   - look at demographics and impact of government budget
 * future outlook greece
   - could debt be paid back?
+  - need for more loans? 
+  - what is current situation of nonperforming loans of greek banks?
   - influence of inflation
   - influence of interest rate impact for debt rollover
   - why IMF did not participate in the third rescue package, impossible to recover without debt write off? 
