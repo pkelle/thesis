@@ -47,8 +47,20 @@
   billion in 5-year bonds at 4.625 per cent. The issue was oversubscribed as market bids amounted 
   to EUR 6.5 billion. As to 2018, Greece successfully tapped markets in February, raising EUR 3 billion in 
   7-year bonds at 3.5 per cent. The issue was again oversubscribed by a factor of around 2.
+* Greece  will  furthermore  be  able  to  retrieve  the  interest  accumulated  by  the  Euro-system 
+  on Greek government bonds, by semi-annual payments until 2022  [how much?]
+* Overall, Greece will be leaving the programme with a sizeable cash buffer of 24.1 billion euros covering the 
+  sovereign financial needs in the next 24 months. [where and how reported?]
+* In practice, it is difficult to establish numerical thresholds for debt sustainability. As to the debt-to-GDP ratio,    
+  thresholds  appear  to  vary  across  countries,  depending  on  macroeconomic  fundamentals and  debt  managem
+  ent capacities (e.g. Argentina defaulted when its debt was around 60% of GDP, while Japan continues to sustain 
+  debt of more than 200% of GDP). The IMF benchmark is set at 85%.   
+  
   
   
 *** links ***
 * nonperforming loans https://data.worldbank.org/indicator/FB.AST.NPER.ZS?locations=GR
-
+* nonperforming loans ts bank of greece https://www.bankofgreece.gr/Pages/en/Statistics/loans.aspx
+* IMF STAFF GUIDANCE NOTE FOR PUBLIC DEBT SUSTAINABILITY ANALYSIS IN MARKET-ACCESS COUNTRIES 
+  https://www.imf.org/external/np/pp/eng/2013/050913.pdf 
+* greek debt truth comittee report https://auditoriacidada.org.br/wp-content/uploads/2014/06/Report-Greek-Truth-Committee.pdf
