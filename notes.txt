@@ -60,8 +60,13 @@
 * In practice, it is difficult to establish numerical thresholds for debt sustainability. As to the debt-to-GDP ratio,    
   thresholds  appear  to  vary  across  countries,  depending  on  macroeconomic  fundamentals and  debt  managem
   ent capacities (e.g. Argentina defaulted when its debt was around 60% of GDP, while Japan continues to sustain 
-  debt of more than 200% of GDP). The IMF benchmark is set at 85%.   
-  
+  debt of more than 200% of GDP). The IMF benchmark is set at 85%.
+(https://www.bundestag.de/blob/438422/8a5d7ee805bb015654947d6a2c974980/wd-4-083-16-pdf-data.pdf)   
+* „Die Eurogruppe hat sich in ihrer Erklärung zu Griechenland vom 24./25. Mai 2016 darauf ver-
+  ständigt, die Schuldentragfähigkeit anhand von Eckwerten für den Bruttofinanzbedarf (gross
+  fnancing needs, GFN) zu bewerten (mittelfristig unter 15 % des BIP, anschließend unter 20 % des
+  BIP). Die Schuldentragfähigkeitsanalysen der EU-Institutionen einschl. ESM und des IWF zu
+  Griechenland stellen ebenfalls auf den Bruttofinanzbedarf ab  
   
   
 *** links ***
@@ -74,4 +79,16 @@
   https://www.esm.europa.eu/sites/default/files/wp24_final_0.pdf
   
   
+
+
+
+
+*** snippets ***
+* As 97.6% of Greek's debt is denominated in Euro and only 2.4% in other currencies I will ignore any possible exchange rate risks. [http://www.pdma.gr/attachments/article/1659/Bulletin%20No_90.pdf]
+
+*** definitions ***
+* Gross Financing Needs: sum of budget deficits [overall balance? incl. interest payments?] and funds required to roll over debt that matures in the course of the year
+
+
+
 

@@ -5,10 +5,21 @@
 # total 45,9 in 20 years yields 2,295 per year
 # the repayment of the loan tranche is equally distributed per year during the repayment period
 # in million euro
-efsm_debt_repayment_installments = ts(c(2295, 2295, 2295, 2295, 2295, 2295, 2295, 2295), start=2023, frequency=1) #up until 2030
+efsm_debt_repayment_installments = ts(c(0, 0, 0, 0, 2295, 2295, 2295, 2295, 2295, 2295, 2295, 2295), start=2019, frequency=1) #up until 2030
 
+
+# Issued Bonds outstanding with maturing up until 2030
+# http://www.pdma.gr/en/debt-instruments-greek-government-bonds/benchmark-bonds-outstanding
+#GR0114028534 	Hellenic Republic 	4.750% 	17-Apr-14 	17-Apr-19 	2,456,470,000 EUR
+#GR0114029540 	Hellenic Republic 	4.375% 	1-Aug-17 	1-Aug-22 	3,000,000,000 EUR
+#GR0114030555 	Hellenic Republic 	3.500% 	5-Dec-17 	30-Jan-23 	4,355,990,324 EUR
+#GR0118017657 	Hellenic Republic 	3.375% 	15-Feb-18 	15-Feb-25 	3,000,000,000 EUR
+#GR0124034688 	Hellenic Republic 	3.750% 	5-Dec-17 	30-Jan-28 	5,962,747,327 EUR
+bonds_maturing = ts(c(2456.5, 0, 0, 3000, 4356, 0, 3000, 0, 0, 5962.7, 0, 0), start=2019, frequency=1)
+
+
+print (bonds_maturing+efsm_debt_repayment_installments)
 # floating rate notes ESM?
 
 # IMF repayment schedule?
-
 
