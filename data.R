@@ -26,3 +26,5 @@ print (bonds_maturing+efsm_debt_repayment_installments)
 #http://www.pdma.gr/attachments/article/37/Maturity%20Profile%20Central%20Government%20Debt%20Table_30-06-2018.pdf
 yearly_total_debt_repayments = ts(c(39300,13861,5066,5102,9825,12183,7684,9057,6728,6709,12146,5597,6254), start=2018, frequency=1)
 
+
+ 
