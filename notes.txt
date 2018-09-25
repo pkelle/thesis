@@ -87,7 +87,11 @@
 * As 97.6% of Greek's debt is denominated in Euro and only 2.4% in other currencies I will ignore any possible exchange rate risks. [http://www.pdma.gr/attachments/article/1659/Bulletin%20No_90.pdf]
 
 *** definitions ***
-* Gross Financing Needs: sum of budget deficits [overall balance? incl. interest payments?] and funds required to roll over debt that matures in the course of the year
+* Gross Financing Needs: sum of budget deficits [overall balance? incl. interest payments?] and funds required to roll 
+  over debt that matures in the course of the year
+* Stock Flow Adjustment: A positive SFA means that the government debt increases more than the   
+  annual deficit (or decreases less than implied by the surplus). On the  contrary, a negative SFA means that  
+  the government debt increases less than the annual deficit (or decreases faster than implied by the surplus).
 
 
 
