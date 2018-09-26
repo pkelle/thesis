@@ -7,7 +7,6 @@
 # in million euro
 #efsm_debt_repayment_installments = ts(c(0, 0, 0, 0, 2295, 2295, 2295, 2295, 2295, 2295, 2295, 2295), start=2019, frequency=1) #up until 2030
 
-
 # Issued Benchmark Bonds outstanding, maturing up until 2030
 # http://www.pdma.gr/en/debt-instruments-greek-government-bonds/benchmark-bonds-outstanding
 #GR0114028534 	Hellenic Republic 	4.750% 	17-Apr-14 	17-Apr-19 	2,456,470,000 EUR
@@ -17,14 +16,24 @@
 #GR0124034688 	Hellenic Republic 	3.750% 	5-Dec-17 	30-Jan-28 	5,962,747,327 EUR
 #bonds_maturing = ts(c(2456.5, 0, 0, 3000, 4356, 0, 3000, 0, 0, 5962.7, 0, 0), start=2019, frequency=1)
 
-
-print (bonds_maturing+efsm_debt_repayment_installments)
 # floating rate notes ESM?
 
-# IMF repayment schedule?
-
 #http://www.pdma.gr/attachments/article/37/Maturity%20Profile%20Central%20Government%20Debt%20Table_30-06-2018.pdf
-yearly_total_debt_repayments = ts(c(39300,13861,5066,5102,9825,12183,7684,9057,6728,6709,12146,5597,6254), start=2018, frequency=1)
+# in million Euro
+yearly_total_debt_repayments = ts(c(39300, 13861, 5066, 5102, 9825, 12183, 7684, 9057, 6728, 6709, 12146, 5597, 6254), start=2018, frequency=1)
+
+# in million Euro, as of june 2018, not maastricht 
+total_debt = 345379
+
+# in million Euro
+interest_payments_2017 = 5626
+
+# in percent
+yearly_primary_balance_of_GDP_percentage = ts(c(3.5, 3.5, 3.3, 3.1, 3.1, 3.1, 3.1, 3.1, 3.1, 3.1, 3.1, 3.1, 3.1), start=2018, frequency=1)
 
 
- 
+
+
+
+
+
