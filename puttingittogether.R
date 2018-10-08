@@ -4,7 +4,7 @@ library(forecast)
 library(tseries)
 
 #sourcing
-source('C:/thesis/data.R', echo=TRUE)
+#source('C:/thesis/data.R', echo=TRUE)
 
 Forecast.nominalGDP = Forecast.ConstGDP * Forecast.GDP_deflator/100
 

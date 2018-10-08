@@ -5,6 +5,9 @@ library(tfplot)
 library(MASS)
 library(fitdistrplus)
 
+
+#https://medium.com/@c.oelrichs/simple-bayesian-models-of-economic-growth-eb9251ad4d55
+
 year = c(1995:2017)
 years = c(2018:2030)
 # GDP constant price 2010 in million Euro
