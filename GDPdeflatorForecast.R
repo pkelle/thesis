@@ -31,7 +31,7 @@ for(i in seq(1000)) {
 }
 
 Forecast.GDP_deflator.Predictions = do.call(rbind, datalist)
-Forecast.GDP_deflator = colMeans(predictions)
+Forecast.GDP_deflator = colMeans(Forecast.GDP_deflator.Predictions)
 percentChange(ts(Forecast.GDP_deflator, start=2017, frequency = 1))
 
 plow = apply(Forecast.GDP_deflator.Predictions, 2, function(x) quantile(x, 0.25))

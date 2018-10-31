@@ -9,7 +9,7 @@ library(fitdistrplus)
 
 year = c(1995:2017)
 years = c(2018:2030)
-# GDP constant price ,2010 based, in million Euro
+# GDP constant price, 2010 based, in million Euro
 Y = c(158777,	163322,	170645,	177292,	182738,	189901,	197747,	205504,	217412,	228415,	229782,	242771,	250718,	249878,	239132,	226031,	205389,	190395,	184223,	185586,	185047,	184595,	187089)
 
 Y = ts(Y, start=1995, frequency = 1)
