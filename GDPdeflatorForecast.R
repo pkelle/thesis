@@ -30,12 +30,12 @@ for(i in seq(1000)) {
   datalist[[i]] = GDP_deflator_vector[-1] # remove GDP deflator value for 2017
 }
 
-predictions = do.call(rbind, datalist)
+Forecast.GDP_deflator.Predictions = do.call(rbind, datalist)
 Forecast.GDP_deflator = colMeans(predictions)
 percentChange(ts(Forecast.GDP_deflator, start=2017, frequency = 1))
 
-plow = apply(predictions, 2, function(x) quantile(x, 0.25))
-phigh = apply(predictions, 2, function(x) quantile(x, 0.75))
+plow = apply(Forecast.GDP_deflator.Predictions, 2, function(x) quantile(x, 0.25))
+phigh = apply(Forecast.GDP_deflator.Predictions, 2, function(x) quantile(x, 0.75))
 
 p = plot_ly(x = ~years, y = ~Forecast.GDP_deflator, type = 'scatter', mode = 'lines+markers', name = "GDP growth", line = list(width=0.5))
 p = add_trace(p, y = ~plow, name = 'plow', mode = 'lines')
