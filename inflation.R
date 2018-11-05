@@ -7,8 +7,7 @@ Greece.CPIinflation = ts(c(24.668, 24.353, 21.420, 19.859, 18.419, 19.531, 23.11
 
 plot = plot_ly( x=time(Greece.CPIinflation), y = Greece.CPIinflation, type = 'scatter', mode = 'lines', name = "overall", line = list(width=2))
 
-plot = layout(plot, font=list(size=14), yaxis = list(title="Inflation YoY change", ticksuffix = "%"),  
+plot = layout(plot, font=list(size=14), yaxis = list(title="CPI Inflation", ticksuffix = "%"),  
               xaxis = list(autotick=FALSE, dtick=5, title="Year"))
 plot
-
 
