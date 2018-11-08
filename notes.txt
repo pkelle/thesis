@@ -107,6 +107,8 @@ B = debt/GDP  P = PrimaryDeficit/GDP, r= real interest , g=real GDP growth
 
 "Troika"
 
+compare debt structure before and after 3 programmes
+
 questions:
 how to cite if author is not mentioned but release is done by an authority?
 enough to cite the database as source in figure or for a number?
