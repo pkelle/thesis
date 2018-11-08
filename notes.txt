@@ -102,12 +102,17 @@
 
 * why 2030? IMF DSA 5 year normal forecast. longer duration increases inaccuracy. loan repayments start then
 
-* deltaB =  P + (r-g)B
-B = debt/GDP  P = PrimaryDeficit/GDP, r= real interest , g=real GDP growth
+-- deltaB =  P + (r-g)B
+   B = debt/GDP  P = PrimaryDeficit/GDP, r= real interest , g=real GDP growth
 
-"Troika"
+-- "Troika"
 
-compare debt structure before and after 3 programmes
+(IPOL_IDA document)
+-- compare debt structure before and after 3 programmes
+-- differences in DSA IMF EU, primary surplus predictions
+-- different expectations of privatisation income
+-- loans not cash transfered to greece. just payments made for greece 
+
 
 questions:
 how to cite if author is not mentioned but release is done by an authority?
