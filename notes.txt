@@ -116,6 +116,15 @@
 -- loans not cash transfered to greece. just payments made for greece 
 
 
+*** critique ***
+-no initial debt restructuring or haircuts
+-ECB bought greek bonds via SMP in secondary markets
+-debt structure change from bonds to loans
+-made sure private investors (banks) didnt loose their money 
+-greece could have defaulted on its bonds held by ECB and generate "toxic losses"
+-IWH germany benefited from this crisis through lower yields on bunds
+
+
 questions:
 how to cite if author is not mentioned but release is done by an authority?
 enough to cite the database as source in figure or for a number?
