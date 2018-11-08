@@ -105,6 +105,7 @@
 * deltaB =  P + (r-g)B
 B = debt/GDP  P = PrimaryDeficit/GDP, r= real interest , g=real GDP growth
 
+"Troika"
 
 questions:
 how to cite if author is not mentioned but release is done by an authority?
