@@ -116,6 +116,10 @@
 -- loans not cash transfered to greece. just payments made for greece 
 
 
+http://bruegel.org/2018/08/the-ecb-is-compromising-the-attractiveness-of-euro-area-sovereign-bonds/
+The decision of the ECB to revoke, upon the conclusion of Greece’s EU financial aid programme on August 20th, the waiver that allowed Greek bonds to be accepted as collateral in the ECB’s refinancing operations – despite the bonds’ low rating – is bringing the institution’s collateral framework back into the spotlight.
+
+
 *** critique ***
 -no initial debt restructuring or haircuts
 -ECB bought greek bonds via SMP in secondary markets
