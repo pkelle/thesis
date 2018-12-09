@@ -134,6 +134,20 @@ default_prob_vec
 sum(Final.GDPDebtRatio[,13]<=.9)/SAMPLES
 
 
+
+### Dispersion ###
+
+dispersion_vec = apply(Final.GDPDebtRatio, 2, function(x) quantile(x, 0.95)) - apply(Final.GDPDebtRatio, 2, function(x) quantile(x, 0.05))
+
+dispersion_vec 
+GDP_dispersion_percentiles = c()
+for (y in seq(13)) {
+  f <- ecdf(Final.GDPDebtRatio[,y])
+  GDP_dispersion_percentiles = c(GDP_dispersion_percentiles, f(dispersion_vec[y]))
+}
+
+GDP_dispersion_percentiles
+
 #Plotting
 #p1 <- plot_ly()
 #for(i in seq(nrow(Final.GDPDebtRatio))) {
@@ -163,4 +177,4 @@ p2 = add_ribbons(p2, x = years,
                  line = list(color = 'rgba(7, 164, 198, 0.4)'),
                  fillcolor = 'rgba(7, 164, 198, 0.6)',
                  name = "50%")
-p2
+p
