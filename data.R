@@ -31,9 +31,12 @@ interest_payments_2017 = 5626
 # in percent
 yearly_primary_balance_of_GDP_percentage = ts(c(3.5, 3.5, 3.3, 3.1, 3.1, 3.1, 3.1, 3.1, 3.1, 3.1, 3.1, 3.1, 3.1), start=2018, frequency=1)
 
+#http://www.pdma.gr/attachments/article/37/Maturity%20Profile%20Central%20Government%20Debt%20Table_30-06-2018.pdf
+#http://www.pdma.gr/attachments/article/1935/Greece-2019%20Financing%20Strategy.pdf
+#no repos and TBills
+yearly_matured_debt= ts(c(3168, 11844, 5066, 5102, 9825, 12183, 7684, 9057, 6728, 6709, 12146, 5597, 6254), start=2018)
 
 
-
-
+seq(4.3,5.53,length.out=13)
 
 
