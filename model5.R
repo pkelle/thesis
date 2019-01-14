@@ -17,8 +17,8 @@ SAMPLES = 2000
 RealGDP_1980_2017 = c(139374, 137205, 135655, 134192, 136885, 140325, 141047, 137864, 143776, 149238, 149238, 153867, 154940, 152462, 155511, 158777,	163322,	170645,	177292,	182738,	189901,	197747,	205504,	217412,	228415,	229782,	242771,	250718,	249878,	239132,	226031,	205389,	190395,	184223,	185586,	185047,	184595,	187089)
 
 # GDP deflator with base year 2010, source IMF WEO (https://www.imf.org/external/pubs/ft/weo/2018/01/weodata/index.aspx) 
-GDP_deflator_1980_2017 = c(5.101, 6.203, 7.891, 9.518, 11.605, 13.812, 16.421, 18.925, 22.081, 25.283, 30.514, 36.552, 41.962, 48.016, 53.386, 58.613, 63.088, 67.223, 70.654, 73.214, 74.379, 76.964, 79.542, 82.288, 84.809, 86.709, 89.740, 92.811, 96.843, 99.332, 100.000, 100.798, 100.425, 98.063, 96.266, 95.279, 94.368, 95.000)
-
+#GDP_deflator_1980_2017 = c(5.101, 6.203, 7.891, 9.518, 11.605, 13.812, 16.421, 18.925, 22.081, 25.283, 30.514, 36.552, 41.962, 8.016, 53.386, 58.613, 63.088, 67.223, 70.654, 73.214, 74.379, 76.964, 79.542, 82.288, 84.809, 86.709, 89.740, 92.811, 96.843, 99.332, 100.000, 100.798, 100.425, 98.063, 96.266, 95.279, 94.368, 95.000)
+GDP_deflator_2001_2017 = c(76.964, 79.542, 82.288, 84.809, 86.709, 89.740, 92.811, 96.843, 99.332, 100.000, 100.798, 100.425, 98.063, 96.266, 95.279, 94.368, 95.000)
 # http://www.pdma.gr/attachments/article/37/Maturity%20Profile%20Central%20Government%20Debt%20Table_30-06-2018.pdf
 # http://www.pdma.gr/attachments/article/1935/Greece-2019%20Financing%20Strategy.pdf
 # debt repayment schedule, excluding repos and TBills
@@ -34,9 +34,9 @@ RealGDPpercent_1981_2017 = percentChange(RealGDP_1980_2017) # create time series
 RealGDPpercent_1981_2017 = 1 + RealGDPpercent_1981_2017/100 # change to have a vector of proper growth multipicators
 
 ### GDP DEFLATOR ###
-GDP_deflator_1980_2017 = ts(GDP_deflator_1980_2017, start=1980, frequency=1)
-GDPdeflatorPercent_1981_2017 = percentChange(GDP_deflator_1980_2017)
-GDPdeflatorPercent_1981_2017 = 1 + GDPdeflatorPercent_1981_2017/100
+GDP_deflator_2001_2017 = ts(GDP_deflator_2001_2017, start=1980, frequency=1)
+GDPdeflatorPercent_2002_2017 = percentChange(GDP_deflator_2001_2017)
+GDPdeflatorPercent_2002_2017 = 1 + GDPdeflatorPercent_2002_2017/100
 
 temp_datalist_realGDP = list()
 temp_datalist_GDPdeflator = list()
@@ -44,19 +44,29 @@ temp_datalist_GDPdeflator = list()
 for(i in seq(SAMPLES)) {
   start = sample(seq(length(RealGDPpercent_1981_2017)), 1, replace=T) # determine start year 
   ForecastRealGDPgrowth = RealGDPpercent_1981_2017[start] # first year real GDP
-  ForecastGDPdeflatorgrowth = GDPdeflatorPercent_1981_2017[start] # first year GDP deflator 
+   # first year GDP deflator 
    
   start = sample(seq(length(RealGDPpercent_1981_2017)-3), 1, replace=T) # determine start year 
   ForecastRealGDPgrowth = c(ForecastRealGDPgrowth, RealGDPpercent_1981_2017[start:(start+3)]) # next 4 years real GDP
-  ForecastGDPdeflatorgrowth = c(ForecastGDPdeflatorgrowth, GDPdeflatorPercent_1981_2017[start:(start+3)]) # next 4 years GDP deflator
   
   start = sample(seq(length(RealGDPpercent_1981_2017)-3), 1, replace=T) # determine start year
   ForecastRealGDPgrowth = c(ForecastRealGDPgrowth, RealGDPpercent_1981_2017[start:(start+3)]) 
-  ForecastGDPdeflatorgrowth = c(ForecastGDPdeflatorgrowth, GDPdeflatorPercent_1981_2017[start:(start+3)])
   
   start = sample(seq(length(RealGDPpercent_1981_2017)-3), 1, replace=T) # determine start year
   ForecastRealGDPgrowth = c(ForecastRealGDPgrowth, RealGDPpercent_1981_2017[start:(start+3)])
-  ForecastGDPdeflatorgrowth = c(ForecastGDPdeflatorgrowth, GDPdeflatorPercent_1981_2017[start:(start+3)])
+  
+  #DEFLATOR
+  start = sample(seq(length(GDPdeflatorPercent_2002_2017)), 1, replace=T)
+  ForecastGDPdeflatorgrowth = GDPdeflatorPercent_2002_2017[start]
+  
+  start = sample(seq(length(GDPdeflatorPercent_2002_2017)-3), 1, replace=T) 
+  ForecastGDPdeflatorgrowth = c(ForecastGDPdeflatorgrowth, GDPdeflatorPercent_2002_2017[start:(start+3)])
+  
+  start = sample(seq(length(GDPdeflatorPercent_2002_2017)-3), 1, replace=T) 
+  ForecastGDPdeflatorgrowth = c(ForecastGDPdeflatorgrowth, GDPdeflatorPercent_2002_2017[start:(start+3)])
+  
+  start = sample(seq(length(GDPdeflatorPercent_2002_2017)-3), 1, replace=T) 
+  ForecastGDPdeflatorgrowth = c(ForecastGDPdeflatorgrowth, GDPdeflatorPercent_2002_2017[start:(start+3)])
   
   ForecastRealGDP = c(187089) # 2017 real GDP
   
@@ -170,12 +180,28 @@ DebtGDP_dispersion_percentiles
 ### Plotting ###
 
 #Plot all simulated GDP
-#p1 <- plot_ly()
-#for(i in seq(nrow(GDPDebtRatiomatrix))) {
+# p1 <- plot_ly()
+# for(i in seq(nrow(GDPDebtRatiomatrix))) {
 # p1 = add_trace(p1, y = GDPDebtRatiomatrix[i,], name = i, mode = 'lines',  type = 'scatter', line = list(width=0.5))
-#}
-#p1 = layout(p1, showlegend=F)
-#p1
+# }
+# p1 = layout(p1, showlegend=F)
+# p1
+
+#Plot total debt
+# p1 <- plot_ly()
+# for(i in seq(nrow(ForecastDebtmatrix))) {
+#  p1 = add_trace(p1, y = ForecastDebtmatrix[i,], name = i, mode = 'lines',  type = 'scatter', line = list(width=0.5))
+# }
+# p1 = layout(p1, showlegend=F)
+# p1
+
+p1 <- plot_ly()
+for(i in seq(nrow(ForecastRealGDPmatrix))) {
+  p1 = add_trace(p1, y = ForecastRealGDPmatrix[i,], name = i, mode = 'lines',  type = 'scatter', line = list(width=0.5))
+}
+p1 = layout(p1, showlegend=F)
+p1
+
 
 # plot prediction intervals
 p2  <- plot_ly()
