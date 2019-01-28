@@ -81,6 +81,10 @@ for(i in seq(SAMPLES)) {
   #
   avggrowth = (avggrowth + sum(ForecastRealGDPgrowth)/length(ForecastRealGDPgrowth))/2
   avggrowthde = (avggrowthde + sum(ForecastGDPdeflatorgrowth)/length(ForecastGDPdeflatorgrowth))/2
+  #
+  #
+  #
+  
   
   # remove GDP value for 2017 and insert vector in a temporary dataframe
   temp_datalist_realGDP[[i]] = ForecastRealGDP[-1] 
@@ -188,19 +192,19 @@ DebtGDP_dispersion_percentiles
 # p1
 
 #Plot total debt
-# p1 <- plot_ly()
-# for(i in seq(nrow(ForecastDebtmatrix))) {
-#  p1 = add_trace(p1, y = ForecastDebtmatrix[i,], name = i, mode = 'lines',  type = 'scatter', line = list(width=0.5))
-# }
-# p1 = layout(p1, showlegend=F)
-# p1
-
 p1 <- plot_ly()
-for(i in seq(nrow(ForecastRealGDPmatrix))) {
-  p1 = add_trace(p1, y = ForecastRealGDPmatrix[i,], name = i, mode = 'lines',  type = 'scatter', line = list(width=0.5))
+for(i in seq(nrow(ForecastDebtmatrix))) {
+ p1 = add_trace(p1, y = ForecastDebtmatrix[i,], name = i, mode = 'lines',  type = 'scatter', line = list(width=0.5))
 }
 p1 = layout(p1, showlegend=F)
 p1
+
+# p1 <- plot_ly()
+# for(i in seq(nrow(ForecastRealGDPmatrix))) {
+#   p1 = add_trace(p1, y = ForecastRealGDPmatrix[i,], name = i, mode = 'lines',  type = 'scatter', line = list(width=0.5))
+# }
+# p1 = layout(p1, showlegend=F)
+# p1
 
 
 # plot prediction intervals
@@ -231,4 +235,5 @@ p2 = add_ribbons(p2, x = years,
                  name = "10%")
 p2 = add_trace(p2, x = years,y = temp_GDPDebtdifference, name = i, mode = 'lines',  type = 'scatter', line = list(width=0.5))
 p2
+
 
