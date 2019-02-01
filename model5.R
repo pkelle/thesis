@@ -25,8 +25,19 @@ GDP_deflator_2001_2017 = c(76.964, 79.542, 82.288, 84.809, 86.709, 89.740, 92.81
 # in million Euro
 yearly_matured_debt= ts(c(3168, 11844, 5066, 5102, 9825, 12183, 7684, 9057, 6728, 6709, 12146, 5597, 6254), start=2018)
 
+#new debt interest rates
 #forecasted Greek 10yr bond yields, interest rate for new debt, now 4.3%, forward rate calculated in 2030 5.53%
-GreekNewDebtInterestRates=c(0, seq(0.043, 0.0553, length.out=13))
+GreekNewDebtInterestRates=seq(0.043, 0.0529, length.out=13)
+
+#old debt interest rates
+#in million euro, source ELSTAT "The Greek Economy"
+Govdebt2016 = 315009 
+Govdebt2017 = 317407 
+interestpayments2017 = 5626
+avginterestrate_2017 = interestpayments2017/Govdebt2016
+# EC prediction for 2030 for EFSF loans 3.1% 
+GreekOldDebtInterestRates = seq(avginterestrate_2017, 0.031, length.out=14)
+GreekOldDebtInterestRates = GreekOldDebtInterestRates[-1]
 
 ### REAL GDP ###
 RealGDP_1980_2017 = ts(RealGDP_1980_2017, start=1980, frequency=1) # create time series
@@ -77,14 +88,9 @@ for(i in seq(SAMPLES)) {
   }
   
   #
-  #
-  #
   avggrowth = (avggrowth + sum(ForecastRealGDPgrowth)/length(ForecastRealGDPgrowth))/2
   avggrowthde = (avggrowthde + sum(ForecastGDPdeflatorgrowth)/length(ForecastGDPdeflatorgrowth))/2
   #
-  #
-  #
-  
   
   # remove GDP value for 2017 and insert vector in a temporary dataframe
   temp_datalist_realGDP[[i]] = ForecastRealGDP[-1] 
@@ -104,14 +110,6 @@ ForecastRealGDPmatrix = do.call(rbind, temp_datalist_realGDP)
 ForecastGDPdeflatormatrix = do.call(rbind, temp_datalist_GDPdeflator)
 
 ### FORECAST ###
-
-#in million euro, source ELSTAT "The Greek Economy"
-Govdebt2016 = 315009 
-Govdebt2017 = 317407 
-interestpayments2017 = 5626
-avginterestrate = interestpayments2017/Govdebt2016
-# EC prediction for 2030 for EFSF loans 3.1%
-GreekOldDebtInterestRates = seq(avginterestrate, 0.031, length.out=13)
 
 # EU assumption, in percent
 PrimaryBalancePercGDP_2018_2030 = ts(c(3.5, 3.5, 3.5, 3.5, 3.5, 3.0, 2.5, 2.2, 2.2, 2.2, 2.2, 2.2, 2.2), start=2018, frequency=1)
