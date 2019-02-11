@@ -1,8 +1,23 @@
-library(plotly)
-library(scales)
-library(tfplot)
-library(MASS)
-library(fitdistrplus)
+#library(plotly)
+#library(scales)
+#library(tfplot)
+#library(MASS)
+#library(fitdistrplus)
+
+if(!require(plotly)){
+  install.packages("plotly")
+  library(plotly)
+}
+
+if(!require(scales)){
+  install.packages("scales")
+  library(scales)
+}
+
+if(!require(tfplot)){
+  install.packages("tfplot")
+  library(tfplot)
+}
 
 avggrowth = 0
 avggrowthde = 0
@@ -156,7 +171,10 @@ for(i in seq(nrow(ForecastGDPmatrix))) {
 
 GDPDebtRatiomatrix = ForecastDebtmatrix/ForecastGDPmatrix
 
-### probability to achieve a debt GDP ratio <= 90% ###
+
+### Evaluation ###
+
+# probability for each year of the forecast to achieve a debt GDP ratio <= 90% 
 DebtGDP_90_prob = c()
 
 # check for each year all simulated values and count the amount of which fall within <= 0.9
@@ -164,8 +182,30 @@ DebtGDP_90_prob = c()
 for(i in seq(ncol(GDPDebtRatiomatrix))) {
   DebtGDP_90_prob = c(DebtGDP_90_prob, sum(GDPDebtRatiomatrix[,i]<=0.9)/SAMPLES)
 }
-
 DebtGDP_90_prob
+
+# probability in 2030 of debt to GDP ratio <=X 
+DebtGDP_prob = c()
+for(i in seq(from=90, to=300)) {
+  DebtGDP_prob = c(DebtGDP_prob, sum(GDPDebtRatiomatrix[, ncol(GDPDebtRatiomatrix)]<=(i/100))/SAMPLES)
+}
+DebtGDP_prob
+
+plot = plot_ly(y = DebtGDP_prob, x0=90,type = 'scatter', mode = 'lines', line = list(width=2))
+plot = layout(plot, yaxis=list(tickformat="%", title="Probability"), xaxis=list(title="Debt to GDP Ratio in 2030",  range = c(90,300), 
+                                                                               tickprefix="<=", ticksuffix="%", tick0=90, dtick=20, tickmode="linear"))
+plot 
+
+# debt stabilisation
+DebtGDP_stable_prob = c()
+for(i in seq(ncol(GDPDebtRatiomatrix))) {
+  DebtGDP_stable_prob = c(DebtGDP_stable_prob, sum(GDPDebtRatiomatrix[, i]<=1.8)/SAMPLES)
+}
+DebtGDP_stable_prob
+
+plot = plot_ly(y = DebtGDP_stable_prob, x = years, name = i, mode = 'lines',  type = 'scatter', line = list(width=2))
+plot = layout(plot, yaxis=list(tickformat="%", title="Probability of Debt-GDP <=180%"), xaxis=list(title="Year"), margin=list(r=30))
+plot
 
 
 ### Dispersion ###
@@ -176,7 +216,7 @@ temp_GDPDebtdifference
 
 DebtGDP_dispersion_percentiles = c()
 
-# now for each of the yearly differences determine the quantile that difference represents 
+# now for each of the yearly differences determine the quantile that the difference represents 
 # of all simulations of that respective year 
 for (y in seq(13)) {
   f <- ecdf(GDPDebtRatiomatrix[,y])
@@ -197,7 +237,7 @@ p1 <- plot_ly()
 for(i in seq(nrow(ForecastDebtmatrix))) {
  p1 = add_trace(p1, y = ForecastDebtmatrix[i,], x = years, name = i, mode = 'lines',  type = 'scatter', line = list(width=0.5))
 }
-p1 = layout(p1, showlegend=F)
+p1 = layout(p1, showlegend=F, yaxis=list(title="Debt"), xaxis=list(title="Year"), margin=list(r=30))
 p1
 
 #Plot GDP 
@@ -205,7 +245,7 @@ p1 <- plot_ly()
 for(i in seq(nrow(ForecastRealGDPmatrix))) {
   p1 = add_trace(p1, y = ForecastGDPmatrix[i,], x = years, name = i, mode = 'lines',  type = 'scatter', line = list(width=0.5))
 }
-p1 = layout(p1, showlegend=F)
+p1 = layout(p1, showlegend=F, yaxis=list(title="GDP"), xaxis=list(title="Year"), margin=list(r=30))
 p1
 
 #Plot Debt GDP ratio 
@@ -213,7 +253,7 @@ p1 <- plot_ly()
 for(i in seq(nrow(ForecastRealGDPmatrix))) {
   p1 = add_trace(p1, y = GDPDebtRatiomatrix[i,], x = years, name = i, mode = 'lines',  type = 'scatter', line = list(width=0.5))
 }
-p1 = layout(p1, showlegend=F, yaxis =list(tickformat="%"))
+p1 = layout(p1, showlegend=F, yaxis=list(tickformat="%", title="Debt-GDP Ratio"), xaxis=list(title="Year"), margin=list(r=30))
 p1
 
 # plot prediction intervals
@@ -243,7 +283,7 @@ p2 = add_ribbons(p2, x = years,
                  fillcolor = 'rgba(7, 164, 198, 0.8)',
                  name = "10%")
 #p2 = add_trace(p2, x = years,y = temp_GDPDebtdifference, name = i, mode = 'lines',  type = 'scatter', line = list(width=0.5))
-p2 = layout(p2, yaxis =list(tickformat="%", title="Debt-GDP Ratio"), xaxis=list(title="Years"))
+p2 = layout(p2, yaxis =list(tickformat="%", title="Debt-GDP Ratio"), xaxis=list(title="Year"))
 p2
 
 
