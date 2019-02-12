@@ -191,20 +191,20 @@ for(i in seq(from=90, to=300)) {
 }
 DebtGDP_prob
 
-plot = plot_ly(y = DebtGDP_prob, x0=90,type = 'scatter', mode = 'lines', line = list(width=2))
-plot = layout(plot, yaxis=list(tickformat="%", title="Probability"), xaxis=list(title="Debt to GDP Ratio in 2030",  range = c(90,300), 
+plot = plot_ly(y=DebtGDP_prob, x0=90, type='scatter', mode='lines', line=list(width=2))
+plot = layout(plot, yaxis=list(tickformat="%", title="Probability"), xaxis=list(title="Debt to GDP Ratio in 2030",  range=c(90,300), 
                                                                                tickprefix="<=", ticksuffix="%", tick0=90, dtick=20, tickmode="linear"))
 plot 
 
-# debt stabilisation
+# debt stabilisation, defines as debt-GDP ratio will not grow, 2017 value 178%
 DebtGDP_stable_prob = c()
 for(i in seq(ncol(GDPDebtRatiomatrix))) {
-  DebtGDP_stable_prob = c(DebtGDP_stable_prob, sum(GDPDebtRatiomatrix[, i]<=1.8)/SAMPLES)
+  DebtGDP_stable_prob = c(DebtGDP_stable_prob, sum(GDPDebtRatiomatrix[,i]<=1.78)/SAMPLES)
 }
 DebtGDP_stable_prob
 
 plot = plot_ly(y = DebtGDP_stable_prob, x = years, name = i, mode = 'lines',  type = 'scatter', line = list(width=2))
-plot = layout(plot, yaxis=list(tickformat="%", title="Probability of Debt-GDP <=180%"), xaxis=list(title="Year"), margin=list(r=30))
+plot = layout(plot, yaxis=list(tickformat="%", title="Probability of Debt-GDP <=178%"), xaxis=list(title="Year"), margin=list(r=30))
 plot
 
 
@@ -214,20 +214,20 @@ plot
 temp_GDPDebtdifference = apply(GDPDebtRatiomatrix, 2, function(x) quantile(x, 0.95)) - apply(GDPDebtRatiomatrix, 2, function(x) quantile(x, 0.05))
 temp_GDPDebtdifference
 
-DebtGDP_dispersion_percentiles = c()
+DebtGDP_dispersion_quantiles = c()
 
 # now for each of the yearly differences determine the quantile that the difference represents 
 # of all simulations of that respective year 
 for (y in seq(13)) {
   f <- ecdf(GDPDebtRatiomatrix[,y])
-  DebtGDP_dispersion_percentiles = c(DebtGDP_dispersion_percentiles, f(temp_GDPDebtdifference[y]))
+  DebtGDP_dispersion_quantiles = c(DebtGDP_dispersion_quantiles, f(temp_GDPDebtdifference[y]))
 }
 
 # see "Debt sustainability analysis for euro area sovereigns: a methodological framework"
 # percentile < 33, green
 # 33 < percentile >= 66th, yellow
 # 66 < percentile), red
-DebtGDP_dispersion_percentiles
+DebtGDP_dispersion_quantiles
 
 
 ### Plotting ###
@@ -237,24 +237,50 @@ p1 <- plot_ly()
 for(i in seq(nrow(ForecastDebtmatrix))) {
  p1 = add_trace(p1, y = ForecastDebtmatrix[i,], x = years, name = i, mode = 'lines',  type = 'scatter', line = list(width=0.5))
 }
-p1 = layout(p1, showlegend=F, yaxis=list(title="Debt"), xaxis=list(title="Year"), margin=list(r=30))
+p1 = layout(p1, showlegend=F, yaxis=list(title="Debt (in million Euro)"), xaxis=list(title="Year"), margin=list(r=30))
 p1
 
 #Plot GDP 
 p1 <- plot_ly()
-for(i in seq(nrow(ForecastRealGDPmatrix))) {
+for(i in seq(nrow(ForecastGDPmatrix))) {
   p1 = add_trace(p1, y = ForecastGDPmatrix[i,], x = years, name = i, mode = 'lines',  type = 'scatter', line = list(width=0.5))
 }
-p1 = layout(p1, showlegend=F, yaxis=list(title="GDP"), xaxis=list(title="Year"), margin=list(r=30))
+p1 = layout(p1, showlegend=F, yaxis=list(title="GDP (in million Euro)"), xaxis=list(title="Year"), margin=list(r=30))
 p1
 
 #Plot Debt GDP ratio 
 p1 <- plot_ly()
-for(i in seq(nrow(ForecastRealGDPmatrix))) {
+for(i in seq(nrow(GDPDebtRatiomatrix))) {
   p1 = add_trace(p1, y = GDPDebtRatiomatrix[i,], x = years, name = i, mode = 'lines',  type = 'scatter', line = list(width=0.5))
 }
 p1 = layout(p1, showlegend=F, yaxis=list(tickformat="%", title="Debt-GDP Ratio"), xaxis=list(title="Year"), margin=list(r=30))
 p1
+
+
+#AVGs, add existing values for 2017 to get growth for 2018
+debtgrowth_avg = 0
+for(i in seq(nrow(ForecastDebtmatrix))) {
+  debtgrowth_avg = debtgrowth_avg + percentChange(ts(c(Govdebt2017, ForecastDebtmatrix[i,])))
+}
+debtgrowth_avg = debtgrowth_avg/nrow(ForecastDebtmatrix)
+debtgrowth_avg
+
+gdpgrowth_avg = 0
+for(i in seq(nrow(ForecastGDPmatrix))) {
+  gdpgrowth_avg = gdpgrowth_avg + percentChange(ts(c(RealGDP_1980_2017[length(RealGDP_1980_2017)]*GDP_deflator_2001_2017[length(GDP_deflator_2001_2017)]/100 
+                                                       ,ForecastGDPmatrix[i,])))
+}
+gdpgrowth_avg = gdpgrowth_avg/nrow(ForecastGDPmatrix)
+gdpgrowth_avg
+
+debtgdpgrowth_avg = 0
+for(i in seq(nrow(GDPDebtRatiomatrix))) {
+  debtgdpgrowth_avg = debtgdpgrowth_avg + percentChange(ts(c(Govdebt2017/(RealGDP_1980_2017[length(RealGDP_1980_2017)]*GDP_deflator_2001_2017[length(GDP_deflator_2001_2017)]/100)  
+                                                              ,GDPDebtRatiomatrix[i,])))
+}
+debtgdpgrowth_avg = debtgdpgrowth_avg/nrow(GDPDebtRatiomatrix)
+debtgdpgrowth_avg
+
 
 # plot prediction intervals
 p2  <- plot_ly()
@@ -263,27 +289,27 @@ p2 = add_ribbons(p2, x = years,
                  ymax = apply(GDPDebtRatiomatrix, 2, function(x) quantile(x, 0.975)),
                  line = list(color = 'rgba(7, 164, 181, 0.2)'),
                  fillcolor = 'rgba(7, 164, 181, 0.2)',
-                 name = "95%")
+                 name = "2.5th-97.5th percentile")
 p2 = add_ribbons(p2, x = years,
                  ymin = apply(GDPDebtRatiomatrix, 2, function(x) quantile(x, 0.05)), 
                  ymax = apply(GDPDebtRatiomatrix, 2, function(x) quantile(x, 0.95)),
                  line = list(color = 'rgba(7, 164, 198, 0.4)'),
                  fillcolor = 'rgba(7, 164, 198, 0.4)',
-                 name = "90%")
+                 name = "5th-95th percentile")
 p2 = add_ribbons(p2, x = years,
                  ymin = apply(GDPDebtRatiomatrix, 2, function(x) quantile(x, 0.25)), 
                  ymax = apply(GDPDebtRatiomatrix, 2, function(x) quantile(x, 0.75)),
                  line = list(color = 'rgba(7, 164, 198, 0.4)'),
                  fillcolor = 'rgba(7, 164, 198, 0.6)',
-                 name = "50%")
+                 name = "25th-75th percentile")
 p2 = add_ribbons(p2, x = years,
                  ymin = apply(GDPDebtRatiomatrix, 2, function(x) quantile(x, 0.45)), 
                  ymax = apply(GDPDebtRatiomatrix, 2, function(x) quantile(x, 0.55)),
                  line = list(color = 'rgba(7, 164, 198, 0.4)'),
                  fillcolor = 'rgba(7, 164, 198, 0.8)',
-                 name = "10%")
+                 name = "45th-55th percentile")
 #p2 = add_trace(p2, x = years,y = temp_GDPDebtdifference, name = i, mode = 'lines',  type = 'scatter', line = list(width=0.5))
-p2 = layout(p2, yaxis =list(tickformat="%", title="Debt-GDP Ratio"), xaxis=list(title="Year"))
+p2 = layout(p2, yaxis =list(tickformat="%", title="Debt-GDP Ratio"), xaxis=list(title="Year"), legend = list(x = 0.04, y = 1.02))
 p2
 
 
