@@ -85,30 +85,30 @@ temp_datalist_GDPdeflator = list()
 #Bootstrap real GDP and Deflator
 for(i in seq(SAMPLES)) {
   #real GDP
-  start = sample(seq(length(realGDPpercent)), 1, replace=T) # determine start year 
-  FCrealGDPpercent = realGDPpercent[start] #  year 1 real GDP
+  start = sample(seq(length(realGDPpercent)-3), 1, replace=T) # determine start year 
+  FCrealGDPpercent = realGDPpercent[start:(start+3)] #  year 1 real GDP
    
   start = sample(seq(length(realGDPpercent)-3), 1, replace=T) # determine start year 
   FCrealGDPpercent = c(FCrealGDPpercent, realGDPpercent[start:(start+3)]) # years 2-5 real GDP
   
-  start = sample(seq(length(realGDPpercent)-3), 1, replace=T) # determine start year
-  FCrealGDPpercent = c(FCrealGDPpercent, realGDPpercent[start:(start+3)]) # years 5-9 real GDP
+  start = sample(seq(length(realGDPpercent)-4), 1, replace=T) # determine start year
+  FCrealGDPpercent = c(FCrealGDPpercent, realGDPpercent[start:(start+4)]) # years 5-9 real GDP
   
-  start = sample(seq(length(realGDPpercent)-3), 1, replace=T) # determine start year
-  FCrealGDPpercent = c(FCrealGDPpercent, realGDPpercent[start:(start+3)]) # years 9-13 real GDP
+  #start = sample(seq(length(realGDPpercent)-3), 1, replace=T) # determine start year
+  #FCrealGDPpercent = c(FCrealGDPpercent, realGDPpercent[start:(start+3)]) # years 9-13 real GDP
   
   #DEFLATOR
-  start = sample(seq(length(GDPdefPerc)), 1, replace=T)
-  FcGDPdefPerc = GDPdefPerc[start]
+  start = sample(seq(length(GDPdefPerc)-3), 1, replace=T)
+  FcGDPdefPerc = GDPdefPerc[start:(start+3)]
   
   start = sample(seq(length(GDPdefPerc)-3), 1, replace=T) 
   FcGDPdefPerc = c(FcGDPdefPerc, GDPdefPerc[start:(start+3)])
   
-  start = sample(seq(length(GDPdefPerc)-3), 1, replace=T) 
-  FcGDPdefPerc = c(FcGDPdefPerc, GDPdefPerc[start:(start+3)])
+  start = sample(seq(length(GDPdefPerc)-4), 1, replace=T) 
+  FcGDPdefPerc = c(FcGDPdefPerc, GDPdefPerc[start:(start+4)])
   
-  start = sample(seq(length(GDPdefPerc)-3), 1, replace=T) 
-  FcGDPdefPerc = c(FcGDPdefPerc, GDPdefPerc[start:(start+3)])
+  #start = sample(seq(length(GDPdefPerc)-3), 1, replace=T) 
+  #FcGDPdefPerc = c(FcGDPdefPerc, GDPdefPerc[start:(start+3)])
   
   FCrealGDP = c(187089) # 2017 real GDP
   
@@ -141,8 +141,8 @@ FcRealGDPmatrix = do.call(rbind, temp_datalist_realGDP)
 FcGDPdeflatormatrix = do.call(rbind, temp_datalist_GDPdeflator)
 
 ### FORECAST ###
-
-FctDebtmatrix = c()
+avgNewDebt = numeric(13)
+FcDebtmatrix = c()
 FcGDPmatrix = FcRealGDPmatrix * (FcGDPdeflatormatrix/100)
 
 for(i in seq(nrow(FcGDPmatrix))) {
@@ -154,7 +154,7 @@ for(i in seq(nrow(FcGDPmatrix))) {
   
   for (j in seq(ncol(FcGDPmatrix))) {
     #in the first year no interest payments yet on new debt 
-    if (i==1) {
+    if (j==1) {
       #interest payments on last years total debt
       interestpayments = IRold[j] * TotalDebt[j]
     }
@@ -171,11 +171,26 @@ for(i in seq(nrow(FcGDPmatrix))) {
     NewDebt = c(NewDebt, max((DebtMaturityProfile[j] - GovBalance[j]),0))
   }
   
-  FctDebtmatrix = rbind(FctDebtmatrix, TotalDebt[-1])
+  #remove 2017 debt before adding to matrix
+  FcDebtmatrix = rbind(FcDebtmatrix, TotalDebt[-1]) 
+  
+  #for stats, average new debt
+  for (k in seq(length(NewDebt))) {
+    avgNewDebt[k] =  mean(c(avgNewDebt[k],sum(NewDebt[1:k])))
+  }
+  
 }
 
-DebtGDPmatrix = FctDebtmatrix/FcGDPmatrix
+DebtGDPmatrix = FcDebtmatrix/FcGDPmatrix
 
+
+#average old debt
+avgOldDebt = apply(FcDebtmatrix, 2, function(x) mean(x))
+# old and new debt composition
+plot = plot_ly(y=avgNewDebt, x = years, type='bar', name="New Debt")
+plot = add_trace(plot,y=avgOldDebt-avgNewDebt, name="Old Debt")
+plot = layout(plot, barmode = 'stack', yaxis=list(title="Debt (in million Euro)"), xaxis=list(title="year")) 
+plot 
 
 ### Evaluation ###
 
@@ -257,8 +272,8 @@ p2
 
 #Plot Debt
 p1 <- plot_ly()
-for(i in seq(nrow(FctDebtmatrix))) {
- p1 = add_trace(p1, y = FctDebtmatrix[i,], x = years, name = i, mode = 'lines',  type = 'scatter', line = list(width=0.5))
+for(i in seq(nrow(FcDebtmatrix))) {
+ p1 = add_trace(p1, y = FcDebtmatrix[i,], x = years, name = i, mode = 'lines',  type = 'scatter', line = list(width=0.5))
 }
 p1 = layout(p1, showlegend=F, yaxis=list(title="Debt (in million Euro)"), xaxis=list(title="Year"), margin=list(r=30))
 p1
@@ -282,10 +297,10 @@ p1
 
 #AVGs, add existing values for 2017 to get growth for 2018
 debtgrowth_avg = 0
-for(i in seq(nrow(FctDebtmatrix))) {
-  debtgrowth_avg = debtgrowth_avg + percentChange(ts(c(Govdebt2017, FctDebtmatrix[i,])))
+for(i in seq(nrow(FcDebtmatrix))) {
+  debtgrowth_avg = debtgrowth_avg + percentChange(ts(c(Govdebt2017, FcDebtmatrix[i,])))
 }
-debtgrowth_avg = debtgrowth_avg/nrow(FctDebtmatrix)
+debtgrowth_avg = debtgrowth_avg/nrow(FcDebtmatrix)
 debtgrowth_avg
 
 gdpgrowth_avg = 0
