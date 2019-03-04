@@ -16,5 +16,3 @@ plot = add_trace(plot, x=time(interest) ,y = interest, name = 'interest payments
 plot = layout(plot, font=list(size=14), yaxis = list(title="Government Balance to GDP Ratio", ticksuffix = "%"),  
               xaxis = list(autotick=FALSE, dtick=5, title="Year"))
 plot
-
-
