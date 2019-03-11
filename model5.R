@@ -4,6 +4,8 @@
 #library(MASS)
 #library(fitdistrplus)
 
+EXPORT = FALSE
+
 if(!require(plotly)){
   install.packages("plotly")
   library(plotly)
@@ -17,6 +19,11 @@ if(!require(scales)){
 if(!require(tfplot)){
   install.packages("tfplot")
   library(tfplot)
+}
+
+if(!require(xlsx)){
+  install.packages("xlsx")
+  library(xlsx)
 }
 
 avggrowth = 0
@@ -86,16 +93,13 @@ temp_datalist_GDPdeflator = list()
 for(i in seq(SAMPLES)) {
   #real GDP
   start = sample(seq(length(realGDPpercent)-3), 1, replace=T) # determine start year 
-  FCrealGDPpercent = realGDPpercent[start:(start+3)] #  year 1 real GDP
+  FCrealGDPpercent = realGDPpercent[start:(start+3)] #  year 1-4 real GDP
    
   start = sample(seq(length(realGDPpercent)-3), 1, replace=T) # determine start year 
-  FCrealGDPpercent = c(FCrealGDPpercent, realGDPpercent[start:(start+3)]) # years 2-5 real GDP
+  FCrealGDPpercent = c(FCrealGDPpercent, realGDPpercent[start:(start+3)]) # years 5-8 real GDP
   
   start = sample(seq(length(realGDPpercent)-4), 1, replace=T) # determine start year
-  FCrealGDPpercent = c(FCrealGDPpercent, realGDPpercent[start:(start+4)]) # years 5-9 real GDP
-  
-  #start = sample(seq(length(realGDPpercent)-3), 1, replace=T) # determine start year
-  #FCrealGDPpercent = c(FCrealGDPpercent, realGDPpercent[start:(start+3)]) # years 9-13 real GDP
+  FCrealGDPpercent = c(FCrealGDPpercent, realGDPpercent[start:(start+4)]) # years 9-13 real GDP
   
   #DEFLATOR
   start = sample(seq(length(GDPdefPerc)-3), 1, replace=T)
@@ -107,9 +111,6 @@ for(i in seq(SAMPLES)) {
   start = sample(seq(length(GDPdefPerc)-4), 1, replace=T) 
   FcGDPdefPerc = c(FcGDPdefPerc, GDPdefPerc[start:(start+4)])
   
-  #start = sample(seq(length(GDPdefPerc)-3), 1, replace=T) 
-  #FcGDPdefPerc = c(FcGDPdefPerc, GDPdefPerc[start:(start+3)])
-  
   FCrealGDP = c(187089) # 2017 real GDP
   
   # loop through all 13 elements of the FCrealGDPpercent vector and multiply them 
@@ -118,7 +119,7 @@ for(i in seq(SAMPLES)) {
     FCrealGDP = c(FCrealGDP, FCrealGDP[length(FCrealGDP)] * temp_perc_change)
   }
   
-  #
+  # stats
   avggrowth = (avggrowth + sum(FCrealGDPpercent)/length(FCrealGDPpercent))/2
   avggrowthde = (avggrowthde + sum(FcGDPdefPerc)/length(FcGDPdefPerc))/2
   #
@@ -165,10 +166,13 @@ for(i in seq(nrow(FcGDPmatrix))) {
     #forecast overall balance
     GovBalance = c(GovBalance, temp_PrimaryBalance[j] - interestpayments)
     
-    #repay debt when surplus, take up debt when deficit
-    TotalDebt = c(TotalDebt, TotalDebt[j] - GovBalance[j])
-    
     NewDebt = c(NewDebt, max((DebtMaturityProfile[j] - GovBalance[j]),0))
+
+    #repay debt when surplus, take up debt when deficit
+    #DebtMaturityProfile payments always are a reduction of the total debt
+    #either financed by gov surplus or NewDebt (which will increase total debt then again)
+    TotalDebt = c(TotalDebt, TotalDebt[j] + (NewDebt[j] - DebtMaturityProfile[j]) - 
+                                    max((GovBalance[j] - DebtMaturityProfile[j]),0))    
   }
   
   #remove 2017 debt before adding to matrix
@@ -178,18 +182,17 @@ for(i in seq(nrow(FcGDPmatrix))) {
   for (k in seq(length(NewDebt))) {
     avgNewDebt[k] =  mean(c(avgNewDebt[k],sum(NewDebt[1:k])))
   }
-  
 }
 
+# debt to GDP ratio
 DebtGDPmatrix = FcDebtmatrix/FcGDPmatrix
 
-
-#average old debt
-avgOldDebt = apply(FcDebtmatrix, 2, function(x) mean(x))
+#average total debt
+avgTotalDebt = apply(FcDebtmatrix, 2, function(x) mean(x))
 # old and new debt composition
 plot = plot_ly(y=avgNewDebt, x = years, type='bar', name="New Debt")
-plot = add_trace(plot,y=avgOldDebt-avgNewDebt, name="Old Debt")
-plot = layout(plot, barmode = 'stack', yaxis=list(title="Debt (in million Euro)"), xaxis=list(title="year")) 
+plot = add_trace(plot,y=avgTotalDebt-avgNewDebt, name="Old Debt")
+plot = layout(plot, barmode = 'stack', yaxis=list(title="Averge Debt (in million Euro)"), xaxis=list(title="year")) 
 plot 
 
 ### Evaluation ###
@@ -213,7 +216,7 @@ DebtGDP_prob
 
 plot = plot_ly(y=DebtGDP_prob, x0=90, type='scatter', mode='lines', line=list(width=2))
 plot = layout(plot, yaxis=list(tickformat="%", title="Probability"), xaxis=list(title="Debt to GDP Ratio in 2030",  range=c(90,300), 
-                                                                               tickprefix=">", ticksuffix="%", tick0=90, dtick=20, tickmode="linear"))
+                                                                                tickprefix=">", ticksuffix="%", tick0=90, dtick=20, tickmode="linear"))
 plot 
 
 # debt stabilisation, defines as debt-GDP ratio will not grow, 2017 value 178%
@@ -226,7 +229,6 @@ DebtGDP_stable_prob
 plot = plot_ly(y = DebtGDP_stable_prob, x = years, name = i, mode = 'lines',  type = 'scatter', line = list(width=2))
 plot = layout(plot, yaxis=list(tickformat="%", title="Probability of Debt-GDP <=178%"), xaxis=list(title="Year"), margin=list(r=30))
 plot
-
 
 ### Dispersion ###
 
@@ -294,14 +296,13 @@ for(i in seq(nrow(DebtGDPmatrix))) {
 p1 = layout(p1, showlegend=F, yaxis=list(tickformat="%", title="Debt-GDP Ratio"), xaxis=list(title="Year"), margin=list(r=30))
 p1
 
-
 #AVGs, add existing values for 2017 to get growth for 2018
 debtgrowth_avg = 0
 for(i in seq(nrow(FcDebtmatrix))) {
   debtgrowth_avg = debtgrowth_avg + percentChange(ts(c(Govdebt2017, FcDebtmatrix[i,])))
 }
 debtgrowth_avg = debtgrowth_avg/nrow(FcDebtmatrix)
-debtgrowth_avg
+debtgrowth_avg #stats table
 
 gdpgrowth_avg = 0
 for(i in seq(nrow(FcGDPmatrix))) {
@@ -309,7 +310,7 @@ for(i in seq(nrow(FcGDPmatrix))) {
                                                        ,FcGDPmatrix[i,])))
 }
 gdpgrowth_avg = gdpgrowth_avg/nrow(FcGDPmatrix)
-gdpgrowth_avg
+gdpgrowth_avg #stats table
 
 debtgdpgrowth_avg = 0
 for(i in seq(nrow(DebtGDPmatrix))) {
@@ -317,8 +318,7 @@ for(i in seq(nrow(DebtGDPmatrix))) {
                                                               ,DebtGDPmatrix[i,])))
 }
 debtgdpgrowth_avg = debtgdpgrowth_avg/nrow(DebtGDPmatrix)
-debtgdpgrowth_avg
-
+debtgdpgrowth_avg #stats table
 
 # plot prediction intervals
 p2  <- plot_ly()
@@ -346,9 +346,19 @@ p2 = add_ribbons(p2, x = years,
                  line = list(color = 'rgba(7, 164, 198, 0.4)'),
                  fillcolor = 'rgba(7, 164, 198, 0.8)',
                  name = "45th-55th percentile")
-#p2 = add_trace(p2, x = years,y = temp_GDPDebtdifference, name = i, mode = 'lines',  type = 'scatter', line = list(width=0.5))
 p2 = layout(p2, yaxis =list(tickformat="%", title="Debt-GDP Ratio"), xaxis=list(title="Year"), legend = list(x = 0.04, y = 1.02), margin=list(r=30))
 p2
 
+### EXPORT DATA ###
 
+if (EXPORT) {
+  for (name in ls()) {
+    type=lapply(mget(name), class)
+    
+    if (type == "numeric" || type == "ts" || type == "matrix" || type == "integer") {
+      write.xlsx(mget(name), paste0(name, ".xlsx"))
+      print(name)
+    }
+  }
+}
 

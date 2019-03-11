@@ -25,6 +25,6 @@ GreekOldDebtInterestRates = GreekOldDebtInterestRates[-1]
 pdebt <- plot_ly()
 pdebt = add_trace(pdebt, x=years, y = GreekOldDebtInterestRates*100, name = 'r_old', mode = 'lines',  type = 'scatter')
 pdebt = add_trace(pdebt, x=years, y = GreekNewDebtInterestRates*100, name = 'r_new', mode = 'lines',  type = 'scatter')
-pdebt = layout(pdebt, font=list(size=14), yaxis = list(title="Interest Rates on Greek Debt (%)"),  
+pdebt = layout(pdebt, font=list(size=14), yaxis = list(title="Interest Rates on Greek Debt", ticksuffix="%"),  
                xaxis = list(autotick=FALSE, dtick=2, title="Year"))
 pdebt
